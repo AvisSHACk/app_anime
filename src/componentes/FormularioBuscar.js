@@ -6,7 +6,7 @@ const FormularioBuscar = ({cambiarResultados}) => {
         e.preventDefault();
         let peticion =  await fetch(`https://api.jikan.moe/v4/anime?q=${buscar}&order_by=title&sort=asc&limit=100`);
         let datos = await peticion.json()
-        console.log(datos);
+        console.log(datos.data);
         cambiarResultados(datos.data.slice(0));
     }
     

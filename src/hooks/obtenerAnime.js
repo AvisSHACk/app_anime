@@ -12,7 +12,6 @@ const ObtenerAnime = (id) => {
 
         buscarAnime();
     }, [id])
-    console.log(anime)
     return anime;
 }
  

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const ObtenerAnime = (id) => {
     const [anime, cambiarAnime] = useState({});
+
     useEffect(() => {
         const buscarAnime = async () => {
             let peticion =  await fetch(`https://api.jikan.moe/v4/anime/${id}`);
@@ -11,7 +12,7 @@ const ObtenerAnime = (id) => {
 
         buscarAnime();
     }, [id])
-    
+    console.log(anime)
     return anime;
 }
  

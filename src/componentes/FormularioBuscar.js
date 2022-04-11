@@ -1,27 +1,59 @@
-import { useState } from "react";
-const FormularioBuscar = ({cambiarResultados}) => {
+import {useState } from "react";
+import styled from "styled-components";
+const FormularioBuscar = ({cambiarResultados, setLoading}) => {
     const [buscar, cambiarBuscar] = useState("");
 
     const buscarAnime = async (e) => {
+        setLoading(true)
         e.preventDefault();
         let peticion =  await fetch(`https://api.jikan.moe/v4/anime?q=${buscar}&order_by=title&sort=asc&limit=100`);
         let datos = await peticion.json()
-        console.log(datos.data);
-        cambiarResultados(datos.data.slice(0));
+        // console.log(datos.data);
+        cambiarResultados(datos.data);
+        setLoading(false)
     }
+
+    // console.log(buscar)
     
     return ( 
-        <form action="">
-            <input 
+        <ContenedorFormulario action="">
+            <Input 
                 type="text" 
                 name="buscar"
                 id="buscar"
                 value={buscar}
                 onChange={e => cambiarBuscar(e.target.value)}
+                placeholder="Haz tu busquedad onichan"
             />
-            <button type="submit" onClick={e => buscarAnime(e)}>Buscar</button>
-        </form>
+            <Button type="submit" onClick={e => buscarAnime(e)}>Buscar</Button>
+        </ContenedorFormulario>
      );
 }
- 
+
+const ContenedorFormulario = styled.form`
+    display: flex;
+    position: relative;
+
+`
+
+const Input = styled.input`
+    width: 100%;
+    padding:1rem .6rem;
+    border-radius: 20px;
+    border:2px solid #ccc;
+    outline: 0;
+    transition: border .2s;
+    &:focus {
+        border:2px solid #3a3a3a;
+    }
+`
+
+const Button = styled.button`
+    position: absolute;
+    right: 0;
+    padding:1rem .6rem;
+    background:none;
+    border: 0;
+    cursor: pointer;
+`
 export default FormularioBuscar;

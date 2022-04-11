@@ -5,6 +5,7 @@ import ObtenerAnime from "../hooks/obtenerAnime";
 const Articulos = () => {
     const {id} = useParams();
     const anime = ObtenerAnime(id);
+    console.log(anime)
     // const [anime, cambiarAnime] = useState({});
 
     // useEffect(() => {
@@ -23,12 +24,19 @@ const Articulos = () => {
         <>  
             {/*Hacemos una comprobacion, si el objeto que devuelve no esta vacio, si lo esta no hace nada
             caso contrario me muestra la informacion, si no hago eso me saldra error y que detendra el programa*/}
-            {anime.title && 
+            {anime.title ? 
                 <>
-                <h1>{anime.title}</h1> 
-                <img src={anime.images.jpg.image_url} alt="" />
-                {/* <p>{anime.genres[0].name}</p> */}
+                    <h1>{anime.title}</h1> 
+                    <img src={anime.images.jpg.image_url} alt="" />
+                    <p>Publico: {anime.rating}</p>
+                    <p>Año: {anime.year}</p>
+                    <p>Calificacion: {anime.score}</p>
+                    <p>Estado: {anime.status}</p>
+                    {/* <p>Estudio: {anime.studios[0].name}</p> */}
+                    {/* <p>{anime.genres[0].name}</p> */}
                 </>
+            :
+                <p>Cargando</p>
             }
 
 

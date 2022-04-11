@@ -1,12 +1,16 @@
 import ContenedorCards from "../componentes/ContenedorCards";
 import FormularioBuscar from "../componentes/FormularioBuscar";
-const Inicio = ({resultados, cambiarResultados}) => {
+import BotonCerrarSesion from "../componentes/BotonCerrarSesion";
+const Inicio = ({resultados, cambiarResultados, loading, setLoading}) => {
     return ( 
-        <>
-            <FormularioBuscar cambiarResultados={cambiarResultados}/>
-            <ContenedorCards resultados={resultados}/>
+        <>  
+            <BotonCerrarSesion cambiarResultados={cambiarResultados}/>
+            <FormularioBuscar cambiarResultados={cambiarResultados} setLoading={setLoading}/>
+            <ContenedorCards resultados={resultados} loading={loading}/>
         </>
      );
 }
+
+
  
 export default Inicio;

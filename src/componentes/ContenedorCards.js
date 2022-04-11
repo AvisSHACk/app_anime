@@ -1,17 +1,25 @@
-import { Link } from "react-router-dom";
-
-const ContenedorCards = ({resultados}) => {
+import styled from "styled-components";
+import Cards from "./Cards";
+const ContenedorCards = ({resultados, loading}) => {
+    // console.log(loading)
     return ( 
-        <div className="contenedor">
-            {resultados.map(resultado => (
-                <article>
-                    <h2>{resultado.title}</h2>
-                    <img src={resultado.images.jpg.large_image_url} alt="" />
-                    <Link to={`/articulo/${resultado.mal_id}`}>Ver mas informacion</Link>
-                </article>
-            ))}
-        </div>
+        <ContenedorCard className="contenedor">
+            {loading && <p>Cargando</p>}
+            {!loading && resultados.map(resultado => (
+                <Cards key={resultado.mal_id} resultado={resultado}/>
+            )) }
+        </ContenedorCard>
      );
 }
+
+const ContenedorCard = styled.div `
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`
+
+
+
+
  
 export default ContenedorCards;

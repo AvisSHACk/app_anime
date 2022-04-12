@@ -5,6 +5,7 @@ import Articulo from "./routes/Articulo";
 import styled from "styled-components";
 import Registro from "./routes/Registro";
 import Ingreso from "./routes/Ingreso";
+import Favoritos from "./routes/Favoritos";
 import {AuthProvider} from "./hooks/authContext";
 import RutaProtegida from "./componentes/RutaPrivada";
 
@@ -22,6 +23,7 @@ const App = () => {
           <Route element={<RutaProtegida />}>
             <Route path="/" exact="true" element={<Inicio resultados={resultados} cambiarResultados={cambiarResultados} loading={loading} setLoading={setLoading}/> }/>
             <Route path="/articulo/:id" element={<Articulo />}/>
+            <Route path="/favoritos" element={<Favoritos/>}/>
           </Route>
         </Routes>
       </ContenedorApp>

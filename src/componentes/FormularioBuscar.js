@@ -7,8 +7,10 @@ const FormularioBuscar = ({cambiarResultados, setLoading}) => {
         setLoading(true)
         e.preventDefault();
         let peticion =  await fetch(`https://api.jikan.moe/v4/anime?q=${buscar}&order_by=title&sort=asc&limit=100`);
+        // let peticion =  await fetch(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=%09J7y2eSWyYeAAa8Ne4mu3Wg4VAAMtzZXP&q=chiclayo&language=es&details=true`);
+        
         let datos = await peticion.json()
-        // console.log(datos.data);
+        // console.log(datos);
         cambiarResultados(datos.data);
         setLoading(false)
     }

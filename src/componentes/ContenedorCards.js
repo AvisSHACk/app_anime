@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import ContenedorCard from "./ContenedorCard";
 import Cards from "./Cards";
 const ContenedorCards = ({resultados, loading}) => {
     // console.log(loading)
@@ -8,18 +8,12 @@ const ContenedorCards = ({resultados, loading}) => {
             {!loading && resultados.map(resultado => (
                 <Cards key={resultado.mal_id} resultado={resultado}/>
             )) }
+
+            {!loading && resultados.length === 0 &&
+                <p>Haz tu busquedad desde el formulario =)</p>
+            }
         </ContenedorCard>
      );
 }
 
-const ContenedorCard = styled.div `
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-`
-
-
-
-
- 
 export default ContenedorCards;

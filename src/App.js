@@ -32,12 +32,13 @@ const App = () => {
 }
 
 const ContenedorApp = styled.div`
-
-    /* background:#000; */
     width:70%;
     margin-left:auto;
     margin-right:auto;
     margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     
 `
 

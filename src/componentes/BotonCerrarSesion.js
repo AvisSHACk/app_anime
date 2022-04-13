@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { auth, signOut } from "../firebase/firebaseConfig";
-
+import Boton from "../componentes/Boton";
 const BotonCerrarSesion = ({cambiarResultados}) => {
 
     const history = useNavigate();
@@ -16,7 +16,7 @@ const BotonCerrarSesion = ({cambiarResultados}) => {
     }
 
     return ( 
-        <button onClick={cerrarSesion}>Cerrar sesion </button>
+        <Boton onClick={cerrarSesion}>Cerrar sesion </Boton>
      );
 }
  

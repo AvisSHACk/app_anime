@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { auth, createUserWithEmailAndPassword } from "../firebase/firebaseConfig";
 import {useNavigate } from "react-router-dom";
 import {useAuth} from "./../hooks/authContext";
+import ContenedorFormulario from "../componentes/ContenedorFormulario";
+import Formulario from "../componentes/Formulario";
+import Input from "../componentes/Input";
+import Boton from "../componentes/Boton";
+import EncabezadoFormulario from "../componentes/EncabezadoFormulario";
 
 const Registro = () => {
 
@@ -31,32 +36,36 @@ const Registro = () => {
     }
 
     return ( 
-        <form action="">
-            <input 
-                type="email" 
-                name="correo"
-                id="email"
-                value={email}
-                onChange={e => cambiarEmail(e.target.value)}
-                placeholder="Email"
-            />
+        // <ContenedorFormulario>
+            <Formulario action="">
+                <EncabezadoFormulario>Registrate</EncabezadoFormulario>
+                <Input 
+                    type="email" 
+                    name="correo"
+                    id="email"
+                    value={email}
+                    onChange={e => cambiarEmail(e.target.value)}
+                    placeholder="Email"
+                />
 
-            <input 
-                type="password" 
-                name="password"
-                id="password"
-                value={password}
-                onChange={e => cambiarPassword(e.target.value)}
-                placeholder="Contraseña"
-            />
+                <Input 
+                    type="password" 
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={e => cambiarPassword(e.target.value)}
+                    placeholder="Contraseña"
+                />
 
-            <button 
-                type="submit"
-                onClick={registrarUsuario}
-            >
-                Registrar usuario
-            </button>
-        </form>
+                <Boton 
+                    type="submit"
+                    onClick={registrarUsuario}
+                    registerLogin
+                >
+                    Registrar usuario
+                </Boton>
+        </Formulario>
+        // </ContenedorFormulario>
      );
 }
  

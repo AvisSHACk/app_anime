@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { auth, signInWithEmailAndPassword } from "../firebase/firebaseConfig";
+import Formulario from "../componentes/Formulario";
+import Input from "../componentes/Input";
+import Boton from "../componentes/Boton";
+import EncabezadoFormulario from "../componentes/EncabezadoFormulario";
 
 const Ingreso = () => {
     const history = useNavigate();
@@ -26,8 +30,9 @@ const Ingreso = () => {
     }   
 
     return ( 
-        <form action="">
-            <input 
+        <Formulario action="">
+            <EncabezadoFormulario>Ingreso</EncabezadoFormulario>
+            <Input 
                 type="email" 
                 name="correo"
                 id="email"
@@ -36,7 +41,7 @@ const Ingreso = () => {
                 placeholder="Email"
             />
 
-            <input 
+            <Input 
                 type="password" 
                 name="password"
                 id="password"
@@ -45,13 +50,14 @@ const Ingreso = () => {
                 placeholder="Contraseña"
             />
 
-            <button 
+            <Boton 
                 type="submit"
                 onClick={iniciarSesion}
+                registerLogin
             >
-                Registrar usuario
-            </button>
-        </form>
+                Iniciar Sesion
+            </Boton>
+        </Formulario>
      );
 }
  

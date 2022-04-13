@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-
+import Boton from "../componentes/Boton";
 const BotonMisFavoritos = () => {
 
     const history = useNavigate();
 
     return ( 
-        <button onClick={() => history("/favoritos")}>Mis favoritos </button>
+        <Boton independiente onClick={() => history("/favoritos")}>Mis favoritos </Boton>
      );
 }
  

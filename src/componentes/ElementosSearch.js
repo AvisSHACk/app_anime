@@ -14,7 +14,6 @@ const InputSearch = styled.input`
     border:2px solid #4c4c4c;
     outline: 0;
     background:#202020;
-    color:#fff;
     transition: border .2s;
     &:focus {
         border:2px solid #603d44;

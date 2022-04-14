@@ -10,15 +10,14 @@ const useAuth = () => {
 const AuthProvider = ({children}) => {
     const [usuario, cambiarUsuario] = useState();
     const [cargando, cambiarCargando] = useState(true);
-
     useEffect(() => {
         const cancelarSuscripcion = onAuthStateChanged(auth, (usuario) => {
-
+            
             cambiarUsuario(usuario)
             cambiarCargando(false)
-
+            
         })
-
+        
         return cancelarSuscripcion;
     }, []);
     return ( 

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {db, addDoc, collection, onSnapshot, query, where, limit} from "./../firebase/firebaseConfig";
 import ObtenerAnime from "../hooks/obtenerAnime";
 import {useAuth} from "./../hooks/authContext";
+import styled from "styled-components";
 
 const Articulos = () => {
     const {id} = useParams();
@@ -74,20 +75,27 @@ const Articulos = () => {
             caso contrario me muestra la informacion, si no hago eso me saldra error y que detendra el programa*/}
             {anime.title && todosLosDatosObtenidos? 
                 <>
-                    {console.log("dadaws")}
-                    <h1>{anime.title}</h1> 
-                    <img src={anime.images.jpg.image_url} alt="" />
-                    <p>Publico: {anime.rating}</p>
-                    <p>Año: {anime.year}</p>
-                    <p>Calificacion: {anime.score}</p>
-                    <p>Estado: {anime.status}</p>
+                    <ContenedorArticulo>
+                        <h1>{anime.title}</h1>
+                        <ContenedorInformacion>
+                            <ContenedorImagen>
+                                <img src={anime.images.jpg.image_url} alt="" />
+                            </ContenedorImagen>
+                            <div>
+                                <p>Publico: {anime.rating}</p>
+                                <p>Año: {anime.year}</p>
+                                <p>Calificacion: {anime.score}</p>
+                                <p>Estado: {anime.status}</p>
 
-                    {!yaEstaEnFavoritos ? 
-                        <button onClick={agregarFavoritos}>Agregar a favoritos</button>
+                                {!yaEstaEnFavoritos ? 
+                                    <button onClick={agregarFavoritos}>Agregar a favoritos</button>
 
-                    :
-                    <p>ya esta en favoritos</p>
-                    }
+                                :
+                                <p>ya esta en favoritos</p>
+                                }
+                            </div>
+                        </ContenedorInformacion>
+                    </ContenedorArticulo>
 
                     
                     {/* {yaEstaEnFavoritos ? 
@@ -105,5 +113,19 @@ const Articulos = () => {
         </>
     );
 }
+
+const ContenedorArticulo = styled.div`
+    width:100%;
+    display: flex;
+    flex-direction: column;
+`
+
+const ContenedorImagen = styled.div`
+    margin: 0;
+`
+
+const ContenedorInformacion = styled.div`
+    display: flex;
+`
  
 export default Articulos;

@@ -4,8 +4,8 @@ const Cards = ({resultado}) => {
     return (
         <Card>
             <Link to={`/articulo/${resultado.mal_id}`}>
-                <Portada src={resultado.images.jpg.image_url} alt="" />
-                <Titulo>{resultado.title}</Titulo>
+                <PortadaCard src={resultado.images.jpg.image_url} alt="" />
+                <TituloCard>{resultado.title}</TituloCard>
             </Link>
         </Card>
     );
@@ -13,17 +13,19 @@ const Cards = ({resultado}) => {
 
 const Card = styled.article`
     width: 19%;
+    margin-top:1rem;
 `
 
-const Portada = styled.img`
+const PortadaCard = styled.img`
     width: 100%;
     height: 350px;
     object-fit: cover;
 `
 
-const Titulo = styled.h2`
+const TituloCard = styled.h2`
     margin: 0;
     font-size:1rem;
+    color:#fff;
 `
  
 export default Cards;

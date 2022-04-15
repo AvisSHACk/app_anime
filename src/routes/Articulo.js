@@ -84,7 +84,7 @@ const Articulos = () => {
                                 <p>Calificacion: {anime.score}</p>
                                 <p>Estado: {anime.status}</p>
 
-                                {!yaEstaEnFavoritos && yaEstaEnFavoritos !== undefined ? 
+                                {!yaEstaEnFavoritos ? 
                                     <button onClick={agregarFavoritos}>Agregar a favoritos</button>
                                 :
                                 <p>ya esta en favoritos</p>

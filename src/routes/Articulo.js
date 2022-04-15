@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {db, addDoc, collection, onSnapshot, query, where, limit} from "./../firebase/firebaseConfig";
+import {db, addDoc, collection, onSnapshot, query, where} from "./../firebase/firebaseConfig";
 import ObtenerAnime from "../hooks/obtenerAnime";
 import {useAuth} from "./../hooks/authContext";
 import styled from "styled-components";
@@ -10,10 +10,7 @@ const Articulos = () => {
     const anime = ObtenerAnime(id);
     const {usuario} = useAuth();
     const [yaEstaEnFavoritos, cambiarYaEstaEnFavoritos] = useState(false);
-    const [todosLosDatosObtenidos, cambiarTodosLosDatosObtenidos] = useState(false);
-    ;
-    // console.log(anime)
-    // const [anime, cambiarAnime] = useState({});
+    const [loading, setLoading] = useState(true);
 
     // useEffect(() => {
     //     const buscarAnime = async () => {
@@ -46,34 +43,34 @@ const Articulos = () => {
 
     useEffect(() => {
         const onSuscribe = onSnapshot(query(collection(db, "favoritos"),
-        where('titulo', '==', `${anime.title}${usuario.uid}` ),
-        limit(10)),
+        where('titulo', '==', `${anime.title}${usuario.uid}` )),
         (snapshot) => {
             // cambiarAnime(snapshot.docs.map((anime) => {
             //     return anime.data()
             // }))
-            snapshot.docs.map((anime) => {
-                if(anime) {
+                snapshot.docs.map((anime) => {
                     cambiarYaEstaEnFavoritos(true);
-                }
+                    return null;
+                })
+                setLoading(false);
+                // console.log(anime)
+                // cambiarTodosLosDatosObtenidos(true)
 
-                return null;
-            })
-
-            cambiarTodosLosDatosObtenidos(true)
 
         })
         return onSuscribe;
-
+        
 
         // return onSuscribe;
-    }, [usuario, anime])
+    }, [anime, usuario.uid])
+
+    console.log(yaEstaEnFavoritos)
 
     return ( 
         <>  
             {/*Hacemos una comprobacion, si el objeto que devuelve no esta vacio, si lo esta no hace nada
             caso contrario me muestra la informacion, si no hago eso me saldra error y que detendra el programa*/}
-            {anime.title && todosLosDatosObtenidos? 
+            {anime.title && !loading ? 
                 <>
                     <ContenedorArticulo>
                         <h1>{anime.title}</h1>
@@ -87,23 +84,14 @@ const Articulos = () => {
                                 <p>Calificacion: {anime.score}</p>
                                 <p>Estado: {anime.status}</p>
 
-                                {!yaEstaEnFavoritos ? 
+                                {!yaEstaEnFavoritos && yaEstaEnFavoritos !== undefined ? 
                                     <button onClick={agregarFavoritos}>Agregar a favoritos</button>
-
                                 :
                                 <p>ya esta en favoritos</p>
                                 }
                             </div>
                         </ContenedorInformacion>
                     </ContenedorArticulo>
-
-                    
-                    {/* {yaEstaEnFavoritos ? 
-                        <p>No se puede agregar dos veces un mismo anime a favoritos</p>
-                    :
-                    <p></p> */}
-                    {/* <p>Estudio: {anime.studios[0].name}</p> */}
-                    {/* <p>{anime.genres[0].name}</p> */}
                 </>
             :
                 <p>Cargando</p>

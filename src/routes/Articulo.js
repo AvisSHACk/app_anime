@@ -125,7 +125,7 @@ const ContenedorImagen = styled.div`
 `
 
 const ContenedorInformacion = styled.div`
-    display: flex;
+    /* display: flex; */
 `
  
 export default Articulos;

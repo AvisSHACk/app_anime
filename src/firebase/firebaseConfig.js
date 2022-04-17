@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getFirestore, addDoc, collection, limit, where, query, onSnapshot, orderBy } from "firebase/firestore";
+import { getFirestore, addDoc, collection, limit, where, query, onSnapshot, orderBy, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut} from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -34,7 +34,10 @@ export {
     where,
     query,
     onSnapshot,
-    orderBy
+    orderBy,
+    deleteDoc, 
+    doc,
+    getDocs
     
 
 }

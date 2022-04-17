@@ -1,13 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {db, addDoc, collection, onSnapshot, query, where} from "./../firebase/firebaseConfig";
+import {db, addDoc, collection, query, where, deleteDoc, doc, getDocs} from "./../firebase/firebaseConfig";
 import ObtenerAnime from "../hooks/obtenerAnime";
 import {useAuth} from "./../hooks/authContext";
 import styled from "styled-components";
 
 const Articulos = () => {
+    // console.log("primea linea del componente")
     const {id} = useParams();
     const anime = ObtenerAnime(id);
+    const [animeFirebase, cambiarAnimeFirebase] = useState({})
     const {usuario} = useAuth();
     const [yaEstaEnFavoritos, cambiarYaEstaEnFavoritos] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -41,30 +43,73 @@ const Articulos = () => {
         }
     }
 
+    const borrarFavoritos = (e) => {
+        deleteDoc(doc(db, "favoritos", animeFirebase.id))
+        .then(()=>{
+            console.log("se ha quitado la coleccion")
+        });
+        cambiarYaEstaEnFavoritos(false);
+    }
+
     useEffect(() => {
-        const onSuscribe = onSnapshot(query(collection(db, "favoritos"),
-        where('titulo', '==', `${anime.title}${usuario.uid}` )),
-        (snapshot) => {
-            // cambiarAnime(snapshot.docs.map((anime) => {
-            //     return anime.data()
-            // }))
-                snapshot.docs.map((anime) => {
-                    cambiarYaEstaEnFavoritos(true);
-                    return null;
-                })
-                setLoading(false);
-                // console.log(anime)
-                // cambiarTodosLosDatosObtenidos(true)
-
-
-        })
-        return onSuscribe;
+        // const onSuscribe = onSnapshot(query(collection(db, "favoritos"),
+        // where('titulo', '==', `${anime.title}${usuario.uid}` )),
+        // (snapshot) => {
+        //     // cambiarAnime(snapshot.docs.map((anime) => {
+        //     //     return anime.data()
+        //     // }))
+        //         snapshot.docs.map((anime) => {
+        //             cambiarAnimeFirebase({...anime, id:anime.id})
+        //             cambiarYaEstaEnFavoritos(true);
+        //             return null;
+        //         })
+        //         console.log("seteando loading")
+        //         setLoading(false);
+        //         // console.log(anime)
+        //         // cambiarTodosLosDatosObtenidos(true)
+                
         
-
+        // })
         // return onSuscribe;
-    }, [anime, usuario.uid])
+        // console.log("dasda")
+        const consultaFuncion = async () => {
+            const q = query(collection(db, "favoritos"),where('titulo', '==', `${anime.title}${usuario.uid}` ));
+            const consulta = await getDocs(q)
+    
+            consulta.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                // console.log(doc.data());
+                cambiarAnimeFirebase({...doc.data(), id:doc.id})
+                // console.log(doc.id, " => ", doc.data());
+                cambiarYaEstaEnFavoritos(true);
+            });
+            
+        }
+        setLoading(false);
+        
+            consultaFuncion()
+        // return onSuscribe;
+    }, [anime.title, usuario.uid])
+    
+    // if(anime.title) {
+    //     console.log("la variable anime tiene valor")
+    // } else {
+    //     console.log("la variable anime no tiene valor")
+    // }
 
-    console.log(yaEstaEnFavoritos)
+    // if(yaEstaEnFavoritos) {
+    //     console.log("El estado yaEstaEnFavoritos cambio")
+    // } else {
+    //     console.log("El estado yaEstaEnFavoritos aun no ha cambiado")
+    // }
+
+    // if(!loading) {
+    //     console.log("El estado loading es false")
+    // } else {
+    //     console.log("loading sigue en true")
+    // }
+
+    // console.log(yaEstaEnFavoritos)
 
     return ( 
         <>  
@@ -85,9 +130,9 @@ const Articulos = () => {
                                 <p>Estado: {anime.status}</p>
 
                                 {!yaEstaEnFavoritos ? 
-                                    <button onClick={agregarFavoritos}>Agregar a favoritos</button>
+                                    <ButtonFavoritos onClick={agregarFavoritos}>Agregar a favoritos</ButtonFavoritos>
                                 :
-                                <p>ya esta en favoritos</p>
+                                <ButtonFavoritos onClick={borrarFavoritos}>Quitar de favoritos</ButtonFavoritos>
                                 }
                             </div>
                         </ContenedorInformacion>
@@ -115,5 +160,9 @@ const ContenedorImagen = styled.div`
 const ContenedorInformacion = styled.div`
     display: flex;
 `
+
+const ButtonFavoritos = styled.button`
+    color:#000;
+`;
  
 export default Articulos;

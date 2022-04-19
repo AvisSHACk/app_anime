@@ -13,6 +13,7 @@ const Registro = () => {
     const history = useNavigate();
     const [email, cambiarEmail] = useState("");
     const [password, cambiarPassword] = useState("");
+    const [alerta, cambiarAlerta] = useState();
     const {usuario} = useAuth();
 
     useEffect(() => {
@@ -23,14 +24,19 @@ const Registro = () => {
 
     const registrarUsuario = async (e) => {
         e.preventDefault();
-
-        try {
-            await createUserWithEmailAndPassword(auth, email, password)
-            console.log("usuario registrado con exito");
-            history("/")
-        } catch (error) {
-            console.log(error.code)
+        console.log(email, password)
+        if(email !== "" && password !== "") {
+            try {
+                await createUserWithEmailAndPassword(auth, email, password)
+                console.log("usuario registrado con exito");
+                history("/")
+            } catch (error) {
+                console.log(error.code)
+            }
+        } else {
+            cambiarAlerta("Los campos no pueden estar vacios");
         }
+
 
 
     }
@@ -64,6 +70,7 @@ const Registro = () => {
                 >
                     Registrar usuario
                 </Boton>
+                {alerta && <div>{alerta}</div>}
         </Formulario>
         // </ContenedorFormulario>
      );

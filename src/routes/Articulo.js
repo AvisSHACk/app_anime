@@ -41,6 +41,8 @@ const Articulos = () => {
         } else {
             console.log("No se puede agregar un campo repetido")
         }
+
+        cambiarYaEstaEnFavoritos(true);
     }
 
     const borrarFavoritos = (e) => {
@@ -119,23 +121,24 @@ const Articulos = () => {
                 <>
                     <ContenedorArticulo>
                         <h1>{anime.title}</h1>
-                        <ContenedorInformacion>
+                        <ContenedorAnime>
                             <ContenedorImagen>
                                 <img src={anime.images.jpg.image_url} alt="" />
                             </ContenedorImagen>
-                            <div>
+                            <ContenedorInformacion>
                                 <p>Publico: {anime.rating}</p>
                                 <p>Año: {anime.year}</p>
                                 <p>Calificacion: {anime.score}</p>
                                 <p>Estado: {anime.status}</p>
+                                <p>Sipnosis: {anime.synopsis}</p>
 
                                 {!yaEstaEnFavoritos ? 
                                     <ButtonFavoritos onClick={agregarFavoritos}>Agregar a favoritos</ButtonFavoritos>
                                 :
                                 <ButtonFavoritos onClick={borrarFavoritos}>Quitar de favoritos</ButtonFavoritos>
                                 }
-                            </div>
-                        </ContenedorInformacion>
+                            </ContenedorInformacion>
+                        </ContenedorAnime>
                     </ContenedorArticulo>
                 </>
             :
@@ -157,12 +160,20 @@ const ContenedorImagen = styled.div`
     margin: 0;
 `
 
-const ContenedorInformacion = styled.div`
-    display: flex;
+const ContenedorAnime = styled.div`
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap:20px;
 `
 
 const ButtonFavoritos = styled.button`
     color:#000;
 `;
+
+const ContenedorInformacion = styled.div`
+    p {
+        margin-bottom:1rem;
+    }
+`
  
 export default Articulos;

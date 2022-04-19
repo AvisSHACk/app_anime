@@ -8,7 +8,7 @@ const BotonCerrarSesion = ({cambiarResultados}) => {
     const cerrarSesion = async () => {
         try {
             await signOut(auth)
-            cambiarResultados([])
+            cambiarResultados([{id: 3, mensaje: "Haz tu busquedad desde el formulario"}])
             history("/ingreso")
         } catch (e) {
             console.log(e)

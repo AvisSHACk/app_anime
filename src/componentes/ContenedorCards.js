@@ -5,14 +5,15 @@ const ContenedorCards = ({resultados, loading}) => {
     // console.log(loading)
     return ( 
         <ContenedorCard className="contenedor">
+            
             {loading && <Mensaje>Cargando</Mensaje>}
-            {!loading && resultados.map(resultado => (
-                <Cards key={resultado.mal_id} resultado={resultado}/>
-            )) }
-
-            {!loading && resultados.length === 0 &&
-                <Mensaje>Haz tu busquedad desde el formulario =)</Mensaje>
-            }
+            {!loading && resultados.map(resultado => {
+                console.log(resultado)
+                return resultado.mensaje ? 
+                            <Mensaje key={resultado.id}>{resultado.mensaje}</Mensaje>
+                        : 
+                            <Cards key={resultado.mal_id} resultado={resultado}/>
+            })}
         </ContenedorCard>
      );
 }

@@ -10,7 +10,7 @@ import {AuthProvider} from "./hooks/authContext";
 import RutaProtegida from "./componentes/RutaPrivada";
 
 const App = () => {
-  const [resultados, cambiarResultados] = useState([]);
+  const [resultados, cambiarResultados] = useState([{id: 3, mensaje: "Haz tu busquedad desde el formulario"}]);
   const [loading, setLoading] = useState(false);
 
   return (

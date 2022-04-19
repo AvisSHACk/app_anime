@@ -11,6 +11,7 @@ const Ingreso = () => {
     const history = useNavigate();
     const [email, cambiarEmail] = useState("");
     const [password, cambiarPassword] = useState("");
+    const [alerta, cambiarAlerta] = useState();
     const {usuario} = useAuth();
 
     useEffect(() => {
@@ -21,11 +22,16 @@ const Ingreso = () => {
 
     const iniciarSesion = async (e) => {
         e.preventDefault();
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            history("/")
-        } catch (error) {
-            console.log(error)
+
+        if(email !== "" && password !== "") {
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                history("/")
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            cambiarAlerta("Los campos no pueden estar vacios");
         }
     }   
 
@@ -57,6 +63,8 @@ const Ingreso = () => {
             >
                 Iniciar Sesion
             </Boton>
+
+            {alerta && <div>{alerta}</div>}
         </Formulario>
      );
 }

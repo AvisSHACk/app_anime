@@ -3,7 +3,13 @@ import {db, collection, onSnapshot, query, where, limit} from './../firebase/fir
 import Cards from "../componentes/Cards";
 import ContenedorCard from "./../componentes/ContenedorCard";
 import {useAuth} from "./../hooks/authContext";
-const Favoritos = () => {
+import BotonCerrarSesion from "../componentes/BotonCerrarSesion";
+import ContenedorButtons from "../componentes/ContenedorButtons";
+import Header from "../componentes/Header";
+import BotonVolver from "../componentes/BotonVolver";
+import {ContenedorMensaje, Mensaje, ImagenMensaje} from "../componentes/AvisoCargando";
+import kanna from "../img/kanna.png"
+const Favoritos = ({cambiarResultados}) => {
 
     const [animes, cambiarAnime] = useState([]);
     const {usuario} = useAuth();
@@ -33,6 +39,11 @@ const Favoritos = () => {
     return ( 
         <>
             {/* {anime[0] && <Cards resultado={anime[0].anime}/>} */}
+            <Header />
+            <ContenedorButtons>
+                <BotonVolver/>
+                <BotonCerrarSesion cambiarResultados={cambiarResultados}/>
+            </ContenedorButtons>
             <h2>Mis favoritos</h2>
             <ContenedorCard>
                 {loading && <p>Cargando</p>}
@@ -42,10 +53,13 @@ const Favoritos = () => {
                     })
                 }
 
-                {!loading && animes.length === 0 &&
-                    <p>No hay favoritos</p>
-                }
             </ContenedorCard>
+            {!loading && animes.length === 0 &&
+                <ContenedorMensaje>
+                    <Mensaje>No hay favoritos</Mensaje>
+                    <ImagenMensaje src={kanna} alt="" />
+                </ContenedorMensaje>
+            }
         </>
         
      );

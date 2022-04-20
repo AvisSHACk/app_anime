@@ -5,15 +5,33 @@ const Cards = ({resultado}) => {
         <Card>
             <Link to={`/articulo/${resultado.mal_id}`}>
                 <PortadaCard src={resultado.images.jpg.image_url} alt="" />
-                <TituloCard>{resultado.title}</TituloCard>
+                <Mask><TituloCard>{resultado.title}</TituloCard></Mask>
             </Link>
         </Card>
     );
 }
 
 const Card = styled.article`
-    width: 19%;
-    margin-top:1rem;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: scale(1, 1);
+    transition: all .2s;
+
+    &:hover {
+        transform: scale(1.1, 1.1);
+    }
+`
+
+const Mask = styled.span`
+    padding:.8rem;
+    background: linear-gradient(0, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+    position: absolute;
+    top:0%;
+    width:100%;
+    height: 100%;
+    display: flex;
+    align-items:flex-end;
 `
 
 const PortadaCard = styled.img`

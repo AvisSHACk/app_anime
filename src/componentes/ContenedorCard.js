@@ -1,9 +1,10 @@
 import styled from "styled-components";
 const ContenedorCard = styled.div `
-width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 `;
 
 export default ContenedorCard;

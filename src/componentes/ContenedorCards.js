@@ -1,20 +1,29 @@
 import ContenedorCard from "./ContenedorCard";
 import Cards from "./Cards";
-import Mensaje from "./AvisoCargando";
+import {ContenedorMensaje, Mensaje, ImagenMensaje} from "./AvisoCargando";
+import chitoge from "../img/chitoge.png"
+
+
 const ContenedorCards = ({resultados, loading}) => {
     // console.log(loading)
     return ( 
-        <ContenedorCard className="contenedor">
-            
-            {loading && <Mensaje>Cargando</Mensaje>}
+        <>
+            <ContenedorCard>
+                
+                {loading && <Mensaje>Cargando</Mensaje>}
+                {!loading && resultados.map(resultado => {
+                    return !resultado.mensaje && <Cards key={resultado.mal_id} resultado={resultado}/>
+                })}
+
+            </ContenedorCard>
+        
             {!loading && resultados.map(resultado => {
-                console.log(resultado)
-                return resultado.mensaje ? 
-                            <Mensaje key={resultado.id}>{resultado.mensaje}</Mensaje>
-                        : 
-                            <Cards key={resultado.mal_id} resultado={resultado}/>
+                    return resultado.mensaje && <ContenedorMensaje key={resultado.id}>
+                                                    <Mensaje>{resultado.mensaje}</Mensaje>
+                                                    <ImagenMensaje src={chitoge}/>
+                                                </ContenedorMensaje>
             })}
-        </ContenedorCard>
+        </>
      );
 }
 

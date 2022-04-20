@@ -3,9 +3,14 @@ import { useState, useEffect } from "react";
 import {db, addDoc, collection, query, where, deleteDoc, doc, getDocs} from "./../firebase/firebaseConfig";
 import ObtenerAnime from "../hooks/obtenerAnime";
 import {useAuth} from "./../hooks/authContext";
+import BotonCerrarSesion from "../componentes/BotonCerrarSesion";
+import BotonMisFavoritos from "../componentes/BotonMisFavoritos";
+import ContenedorButtons from "../componentes/ContenedorButtons";
+import Header from "../componentes/Header";
+import BotonVolver from "../componentes/BotonVolver";
 import styled from "styled-components";
 
-const Articulos = () => {
+const Articulos = ({cambiarResultados}) => {
     // console.log("primea linea del componente")
     const {id} = useParams();
     const anime = ObtenerAnime(id);
@@ -115,31 +120,53 @@ const Articulos = () => {
 
     return ( 
         <>  
+            <Header />
+            <ContenedorButtons>
+                <BotonVolver/>
+                <BotonCerrarSesion cambiarResultados={cambiarResultados}/>
+            </ContenedorButtons>
             {/*Hacemos una comprobacion, si el objeto que devuelve no esta vacio, si lo esta no hace nada
             caso contrario me muestra la informacion, si no hago eso me saldra error y que detendra el programa*/}
             {anime.title && !loading ? 
                 <>
-                    <ContenedorArticulo>
-                        <h1>{anime.title}</h1>
-                        <ContenedorAnime>
-                            <ContenedorImagen>
-                                <img src={anime.images.jpg.image_url} alt="" />
-                            </ContenedorImagen>
-                            <ContenedorInformacion>
-                                <p>Publico: {anime.rating}</p>
-                                <p>Año: {anime.year}</p>
-                                <p>Calificacion: {anime.score}</p>
-                                <p>Estado: {anime.status}</p>
-                                <p>Sipnosis: {anime.synopsis}</p>
+                    <ContenedorAnime>
+                        <ContenedorImagen>
+                            <ImagenArticulo src={anime.images.jpg.image_url} alt="" />
+                            {!yaEstaEnFavoritos ? 
+                                <ButtonFavoritos onClick={agregarFavoritos}>Agregar a favoritos</ButtonFavoritos>
+                            :
+                            <ButtonFavoritos onClick={borrarFavoritos}>Quitar de favoritos</ButtonFavoritos>
+                            }
+                        </ContenedorImagen>
+                        <ContenedorInformacion>
+                            <TituloArticulo><b>Titulo: </b>{anime.title}</TituloArticulo>
+                            <p><b>Sipnosis:</b> {anime.synopsis}</p>
+                            <p><b>Publico:</b> {anime.rating}</p>
+                            <ContenedorGenero>
+                                <b>Generos:</b> 
+                                {anime.genres && anime.genres.map(genre => <Genero key={genre.mal_id}>{genre.name}</Genero>)}
+                            </ContenedorGenero>
+                            <p><b>Rating:</b> {anime.rating}</p>
+                            <p><b>Tipo:</b> {anime.type}</p>
 
-                                {!yaEstaEnFavoritos ? 
-                                    <ButtonFavoritos onClick={agregarFavoritos}>Agregar a favoritos</ButtonFavoritos>
-                                :
-                                <ButtonFavoritos onClick={borrarFavoritos}>Quitar de favoritos</ButtonFavoritos>
-                                }
-                            </ContenedorInformacion>
-                        </ContenedorAnime>
-                    </ContenedorArticulo>
+                            <ContenedorRanked>
+                                <Ranked>
+                                    <p>Score</p>
+                                    {anime.score}
+                                </Ranked>
+                                <Ranked>
+                                    <p>Ranked</p>
+                                    {anime.rank}
+                                </Ranked>
+                                <Ranked>
+                                    <p>Popularity</p>
+                                    {anime.popularity}
+                                </Ranked>
+                            </ContenedorRanked>
+
+                            
+                        </ContenedorInformacion>
+                    </ContenedorAnime>
                 </>
             :
                 <p>Cargando</p>
@@ -151,13 +178,23 @@ const Articulos = () => {
 }
 
 const ContenedorArticulo = styled.div`
-    width:100%;
+    /* width:100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; */
+`
+
+const TituloArticulo = styled.h4`
+    margin-bottom: 8px;
 `
 
 const ContenedorImagen = styled.div`
     margin: 0;
+`
+
+const ImagenArticulo = styled.img`
+    border: 2px solid #fff;
+    border-radius: 12px;
+    overflow: hidden;
 `
 
 const ContenedorAnime = styled.div`
@@ -167,13 +204,49 @@ const ContenedorAnime = styled.div`
 `
 
 const ButtonFavoritos = styled.button`
-    color:#000;
+    width:100%;
+    padding:.6rem;
+    text-align: center;
+    background:#CD4C82;
+    margin-top:1rem;
+    cursor:pointer;
+    border-radius:12px;
 `;
 
 const ContenedorInformacion = styled.div`
     p {
-        margin-bottom:1rem;
+        margin-bottom:8px;
     }
+`
+
+const ContenedorGenero = styled.ul`
+    margin-top: 8px;
+    margin-bottom:8px;
+    display: flex;
+`
+
+const Genero = styled.ul`
+    background: #CD4C82;
+    margin-left:.6rem;
+    padding:0 1rem;
+`
+
+const ContenedorRanked = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 1rem;
+`
+
+const Ranked = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background:#363636;
+    font-size:1.4rem;
+    color:#7C7C7C;
 `
  
 export default Articulos;

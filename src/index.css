@@ -20,6 +20,12 @@ code {
     monospace;
 }
 
+img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
 input, button, textarea {
   display: block;
   border: 0;
@@ -33,4 +39,14 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin:0;
   
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
 }

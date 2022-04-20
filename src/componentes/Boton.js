@@ -13,7 +13,8 @@ const Boton = styled.button`
     `}
     padding:1rem .8rem;
     border-radius: 12px;
-    background:#ef5777 ;
+    /* background:#ef5777 ; */
+    background: #CD4C82;
     cursor: pointer;
 `
 

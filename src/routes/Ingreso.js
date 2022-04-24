@@ -6,6 +6,7 @@ import Formulario from "../componentes/Formulario";
 import Input from "../componentes/Input";
 import Boton from "../componentes/Boton";
 import EncabezadoFormulario from "../componentes/EncabezadoFormulario";
+import Alerta from "../componentes/Alerta";
 
 const Ingreso = () => {
     const history = useNavigate();
@@ -64,7 +65,7 @@ const Ingreso = () => {
                 Iniciar Sesion
             </Boton>
 
-            {alerta && <div>{alerta}</div>}
+            {alerta && <Alerta>{alerta}</Alerta>}
         </Formulario>
      );
 }
